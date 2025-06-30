@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:47:20 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 17:05:55 by thomas           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:31:41 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+# include <string.h>
 
-# define IMG_WIDTH 40
+# define IMG_WIDTH 64
 # define SIZE_X 1920
 # define SIZE_Y 1080
 # define ESC 65307

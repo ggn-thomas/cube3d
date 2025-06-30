@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:57:11 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 16:44:26 by thomas           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:41:03 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ t_ray	*ray_init(t_data *data)
 	ray = malloc(sizeof(t_ray));
 	if (!ray)
 		error("Error: Memory allocation failed!", data);
-	ray->delta_dist_x = 0;
-	ray->delta_dist_y = 0;
-	ray->dir_x = 0;
-	ray->dir_y = 0;
+	ray->delta_dist_x = 0.0;
+	ray->delta_dist_y = 0.0;
+	ray->dir_x = 0.0;
+	ray->dir_y = 0.0;
 	ray->hit = 0;
 	ray->side = 0;
-	ray->perp_wall_dist = 0;
-	ray->side_dist_x = 0;
-	ray->side_dist_y = 0;
+	ray->perp_wall_dist = 0.0;
+	ray->side_dist_x = 0.0;
+	ray->side_dist_y = 0.0;
 	ray->step_x = 0;
 	ray->step_y = 0;
 	ray->screen_heigth = 0;
@@ -50,41 +50,49 @@ void	window_init(t_data	*data)
 	data->ray = ray_init(data);
 }
 
-t_data	data_init(char **map)
+t_data	*data_init(char **map, t_data *data)
 {
-	t_data	data;
-	
-	data.player  = malloc(sizeof(t_player));
-	if (!data.player)
-		error("Error: Memory allocation failed!", &data);
-	data.size_x = SIZE_X;
-	data.size_y = SIZE_Y;
-	data.player->x = 12.5;
-	data.player->y = 11.5; 
-	data.player->dir_x = -1;
-	data.player->dir_y = 0;
-	data.player->plane_x = 0;
-	data.player->plane_y = 0.66;
-	data.player->move_speed = 0.1;
-	data.img_data = 0;
-	data.bits_per_pixel = 0;
-	data.line_length = 0;
-	data.sprites_load = 0;
-	data.map = map;
-	data.img = NULL;
-	window_init(&data);
+	data->player  = malloc(sizeof(t_player));
+	if (!data->player)
+		error("Error: Memory allocation failed!", data);
+	data->size_x = SIZE_X;
+	data->size_y = SIZE_Y;
+	data->player->x = 12.5;
+	data->player->y = 11.5; 
+	data->player->dir_x = -1.0;
+	data->player->dir_y = 0.0;
+	data->player->plane_x = 0.0;
+	data->player->plane_y = 0.66;
+	data->player->move_speed = 0.1;
+	data->img_data = NULL;
+	data->bits_per_pixel = 0;
+	data->line_length = 0;
+	data->sprites_load = 0;
+	data->map = map;
+	data->img = NULL;
+	data->win = NULL;
+	data->mlx = NULL;
+	data->ray = NULL;
+	data->NO = NULL;
+	data->SO = NULL;
+	data->EA = NULL;
+	data->WE = NULL;
+	data->draw_end = 0;
+	data->draw_start = 0;
+	window_init(data);
 	return (data);
 }
 
 void	game_engine(char **map)
 {
-	t_data	data;
+	t_data	*data;
 
-	data = data_init(map);
+	data = malloc(sizeof(t_data));
+	data_init(map, data);
 	//ft_print(data.map);
-	load_sprites(&data);
-	mlx_hook(data.win, 2, 1L << 0, ft_keypress, &data);
-	mlx_loop_hook(data.mlx, render, &data);
-	mlx_hook(data.win, 17, 0, close_window, &data);
-	mlx_loop(data.mlx);
+	load_sprites(data);
+	mlx_hook(data->win, 2, 1L << 0, ft_keypress, data);
+	mlx_loop_hook(data->mlx, render, data);
+	mlx_hook(data->win, 17, 0, close_window, data);
+	mlx_loop(data->mlx);
 }
