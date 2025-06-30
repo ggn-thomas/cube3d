@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:21:20 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/27 14:01:30 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:01:20 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,24 @@ void	draw_vertical_line(t_player *player, t_data *data, t_ray *ray, int x)
 		put_pixel_to_image(data, x, y, ceiling_color);
 		y++;
 	}
-	
 	texture = get_wall_texture(data, ray);
 	if (ray->side == 0)
 		wall_x = player->y + ray->perp_wall_dist * ray->dir_y;
 	else
 		wall_x = player->x + ray->perp_wall_dist * ray->dir_x;
+	wall_x = wall_x - floor(wall_x);
 	tex_x = (int)(wall_x * IMG_WIDTH);
-	
 	y = data->draw_start;
-	while (y <= data->draw_end)
+	while (y < data->draw_end)
 	{
-		tex_y = ((y - data->draw_start) * IMG_WIDTH) / (data->draw_end - data->draw_start);
+		tex_y = (int)((double)(y - data->draw_start) / (data->draw_end - data->draw_start) * IMG_WIDTH);
 		color = get_texture_pixel(texture, tex_x, tex_y);
 		put_pixel_to_image(data, x, y, color);
 		y++;
 	}
 	//dessiner le sol
-	y = data->draw_end + 1;
-	while (y < data->draw_end)
+	y = data->draw_end;
+	while (y < data->size_y)
 	{
 		put_pixel_to_image(data, x, y, floor_color);
 		y++;

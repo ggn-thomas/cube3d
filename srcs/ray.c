@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:46:57 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/27 14:55:05 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:00:54 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	check_hit_wall(t_data *data, t_ray *ray, int *map_x, int *map_y)
 			*map_y += ray->step_y;
 			ray->side = 1;//mur horizontal (sud / nord)
 		}
-		if (data->map[*map_y]->line[*map_x] > 0)
+		if (data->map[*map_y][*map_x] == '1')
 			ray->hit = 1;
 	}
 }
@@ -83,13 +83,22 @@ void	wall_heigth(t_ray *ray, t_data *data)
 {
 	int	line_heigth;
 
+	// Protection contre division par zéro
+	if (ray->perp_wall_dist <= 0.001)
+		ray->perp_wall_dist = 0.001;
+		
 	line_heigth = (int)(data->size_y / ray->perp_wall_dist);
-	data->draw_start = -line_heigth / 2 + data->size_y  /2;
-	data->draw_end = line_heigth / 2 + data->size_y  / 2;
+	data->draw_start = -line_heigth / 2 + data->size_y / 2;
+	data->draw_end = line_heigth / 2 + data->size_y / 2;
+	
 	if (data->draw_start < 0)
 		data->draw_start = 0;
-	if (data->draw_end >= data->size_y )
-		data->draw_end = data->size_y  - 1;
+	if (data->draw_end >= data->size_y)
+		data->draw_end = data->size_y - 1;
+		
+	// DEBUG temporaire
+	if (line_heigth <= 0)
+		printf("ERROR: line_heigth=%d perp_dist=%.3f\n", line_heigth, ray->perp_wall_dist);
 }
 
 void	raycasting(t_ray *ray, t_data *data)
@@ -97,32 +106,15 @@ void	raycasting(t_ray *ray, t_data *data)
 	int	x;
 	int	map_x;
 	int	map_y;
-	int	side;
 
-	printf("=== DEBUG RAYCASTING ===\n");
-	printf("data = %p\n", data);
-	printf("data->player = %p\n", data->player);
-	printf("data->map = %p\n", data->map);
-	printf("Player: x=%f, y=%f\n", data->player->x, data->player->y);
-	if (!data || !data->player || !data->map) {
-		printf("ERROR: NULL pointer detected!\n");
-		return;
-	}
-	side = 0;
 	x = -1;
 	while (++x < data->size_x)
 	{
 		ray->hit = 0;
 		map_x = (int)data->player->x;
 		map_y = (int)data->player->y;
-		printf("Loop %d: Initial map_x=%d, map_y=%d\n", x, map_x, map_y);
-		if (map_x < 0 || map_y < 0) {
-			printf("ERROR: Negative coordinates from start!\n");
-			return;
-		}
 		ray_direction(data, data->player, ray, x);
 		ray_distance(ray, data->player, &map_x, &map_y);
-		printf("After ray_distance: map_x=%d, map_y=%d\n", map_x, map_y);
 		check_hit_wall(data, ray, &map_x, &map_y);
 		perpendicular_distance(ray);
 		draw_vertical_line(data->player, data, ray, x);

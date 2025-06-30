@@ -13,8 +13,7 @@ PARSING_DIR = ./parsing
 INC_DIR     = ./includes
 
 MAIN_SRCS   = $(SRC_DIR)/main.c \
-			  $(SRC_DIR)/map_init.c \
-			  $(SRC_DIR)/cube3d_utils.c \
+			  $(SRC_DIR)/exit_error.c \
 			  $(SRC_DIR)/draw.c \
 			  $(SRC_DIR)/init.c \
 			  $(SRC_DIR)/movements.c \
