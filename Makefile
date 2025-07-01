@@ -22,7 +22,9 @@ MAIN_SRCS = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/movements.c \
 			$(SRC_DIR)/ray.c \
 			$(SRC_DIR)/render.c \
-			$(SRC_DIR)/textures.c
+			$(SRC_DIR)/textures.c \
+			$(SRC_DIR)/pov_handler.c \
+			$(SRC_DIR)/utils.c\
 
 GNL_SRCS = $(GNL_DIR)/get_next_line.c \
 		   $(GNL_DIR)/get_next_line_utils.c

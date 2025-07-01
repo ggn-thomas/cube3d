@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:07:40 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 17:41:38 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/01 14:59:33 by thgaugai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	destroy_sprites(t_data *data)
 	mlx_destroy_image(data->mlx, data->SO);
 	mlx_destroy_image(data->mlx, data->EA);
 	mlx_destroy_image(data->mlx, data->WE);
-	//free(data->C);
-	//free(data->F);
 }
 
 void	ft_free_map(char **map)

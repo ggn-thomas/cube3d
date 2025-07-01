@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:46:57 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 16:00:54 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/01 16:59:30 by thgaugai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,28 +77,6 @@ static void	perpendicular_distance(t_ray *ray)
 		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
-}
-
-void	wall_heigth(t_ray *ray, t_data *data)
-{
-	int	line_heigth;
-
-	// Protection contre division par zéro
-	if (ray->perp_wall_dist <= 0.001)
-		ray->perp_wall_dist = 0.001;
-		
-	line_heigth = (int)(data->size_y / ray->perp_wall_dist);
-	data->draw_start = -line_heigth / 2 + data->size_y / 2;
-	data->draw_end = line_heigth / 2 + data->size_y / 2;
-	
-	if (data->draw_start < 0)
-		data->draw_start = 0;
-	if (data->draw_end >= data->size_y)
-		data->draw_end = data->size_y - 1;
-		
-	// DEBUG temporaire
-	if (line_heigth <= 0)
-		printf("ERROR: line_heigth=%d perp_dist=%.3f\n", line_heigth, ray->perp_wall_dist);
 }
 
 void	raycasting(t_ray *ray, t_data *data)

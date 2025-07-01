@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:08:50 by thomas            #+#    #+#             */
-/*   Updated: 2025/06/30 16:35:39 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/01 16:08:19 by thgaugai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	load_sprites(t_data *data)
 	w = IMG_WIDTH;
 	data->EA = mlx_xpm_file_to_image(data->mlx, "textures/wood.xpm", &w, &w);
 	data->WE = mlx_xpm_file_to_image(data->mlx, "textures/wood.xpm", &w, &w);
-	data->SO = mlx_xpm_file_to_image(data->mlx, "textures/wall_3.xpm", &w, &w);
-	data->NO = mlx_xpm_file_to_image(data->mlx, "textures/wall_3.xpm", &w, &w);
+	data->SO = mlx_xpm_file_to_image(data->mlx, "textures/wood.xpm", &w, &w);
+	data->NO = mlx_xpm_file_to_image(data->mlx, "textures/wood.xpm", &w, &w);
 	if (!data->EA || !data->WE || !data->SO || !data->NO)
 		error("Error: Image loading failed!", data);
 	data->F[0] = 64;

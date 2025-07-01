@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:57:11 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 17:41:03 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/01 16:59:09 by thgaugai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube3d.h"
-
 
 t_ray	*ray_init(t_data *data)
 {
@@ -50,13 +49,8 @@ void	window_init(t_data	*data)
 	data->ray = ray_init(data);
 }
 
-t_data	*data_init(char **map, t_data *data)
+static void	player_init(t_data *data)
 {
-	data->player  = malloc(sizeof(t_player));
-	if (!data->player)
-		error("Error: Memory allocation failed!", data);
-	data->size_x = SIZE_X;
-	data->size_y = SIZE_Y;
 	data->player->x = 12.5;
 	data->player->y = 11.5; 
 	data->player->dir_x = -1.0;
@@ -64,10 +58,25 @@ t_data	*data_init(char **map, t_data *data)
 	data->player->plane_x = 0.0;
 	data->player->plane_y = 0.66;
 	data->player->move_speed = 0.1;
+}
+
+t_data	*data_init(char **map, t_data *data)
+{
+	data->player  = malloc(sizeof(t_player));
+	if (!data->player)
+		error("Error: Memory allocation failed!", data);
+	data->size_x = SIZE_X;
+	data->size_y = SIZE_Y;
+	player_init(data);
 	data->img_data = NULL;
 	data->bits_per_pixel = 0;
 	data->line_length = 0;
 	data->sprites_load = 0;
+	data->fps = 0;
+	data->last_fps_time = 0;
+	data->frame_count = 0;
+	data->draw_end = 0;
+	data->draw_start = 0;
 	data->map = map;
 	data->img = NULL;
 	data->win = NULL;
@@ -77,8 +86,6 @@ t_data	*data_init(char **map, t_data *data)
 	data->SO = NULL;
 	data->EA = NULL;
 	data->WE = NULL;
-	data->draw_end = 0;
-	data->draw_start = 0;
 	window_init(data);
 	return (data);
 }

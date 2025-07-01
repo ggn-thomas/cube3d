@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:45:18 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 16:31:16 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:01:39 by thgaugai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,36 +48,6 @@ void	ft_rightward(t_player *player, t_data *data)
 		player->x += right_x * player->move_speed;
 	if (data->map[(int)(player->y + right_y * player->move_speed)][(int)player->x] != '1')
 		player->y += right_y * player->move_speed;
-}
-
-void	rotate_left(t_player *player)
-{
-	double	speed_rot;
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = player->dir_x;
-	old_plane_x = player->plane_x;
-	speed_rot = 0.1;
-	player->dir_x = player->dir_x * cos(speed_rot) - player->dir_y * sin(speed_rot);
-	player->dir_y = old_dir_x * sin(speed_rot) + player->dir_y * cos(speed_rot);
-	player->plane_x = player->plane_x * cos(speed_rot) - player->plane_y * sin(speed_rot);
-	player->plane_y = old_plane_x * sin(speed_rot) + player->plane_y * cos(speed_rot); 
-}
-
-void	rotate_right(t_player *player)
-{
-	double	speed_rot;
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = player->dir_x;
-	old_plane_x = player->plane_x;
-	speed_rot = 0.1;
-	player->dir_x = player->dir_x * cos(-speed_rot) - player->dir_y * sin(-speed_rot);
-	player->dir_y = old_dir_x * sin(-speed_rot) + player->dir_y * cos(-speed_rot);
-	player->plane_x = player->plane_x * cos(-speed_rot) - player->plane_y * sin(-speed_rot);
-	player->plane_y = old_plane_x * sin(-speed_rot) + player->plane_y * cos(-speed_rot); 
 }
 
 int	ft_keypress(int keycode, t_data *data)

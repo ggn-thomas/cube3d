@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:47:20 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/06/30 17:31:41 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:03:12 by thgaugai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../gnl/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
+# include "../libft/libft.h"
 # include "X11/X.h"
 # include "X11/Xlib.h"
 # include <stdio.h>
@@ -22,6 +23,8 @@
 # include <unistd.h>
 # include <math.h>
 # include <string.h>
+# include <sys/time.h>
+# include <time.h>
 
 # define IMG_WIDTH 64
 # define SIZE_X 1920
@@ -78,6 +81,8 @@ typedef struct s_ray
 
 typedef struct s_data
 {
+	t_player		*player;
+	t_ray			*ray;
 	void			*mlx;
 	void			*win;
 	char			**map;
@@ -92,13 +97,17 @@ typedef struct s_data
 	int				F[3];
 	int				size_x;
 	int				size_y;
+	int				tex_x;
+	int				tex_y;
 	int				line_length;
 	int				bits_per_pixel;
 	int				endian;
 	char			*img_data;
 	int				sprites_load;
-	t_player		*player;
-	t_ray			*ray;
+	int				frame_count;
+	clock_t			last_fps_time;
+	int				fps;
+
 }					t_data;
 
 void				error(char *mess, t_data *data);
@@ -114,8 +123,11 @@ void				wall_heigth(t_ray *ray, t_data *data);
 int					get_texture_pixel(void *texture, int x, int y);
 void    			*get_wall_texture(t_data *data, t_ray *ray);
 void				load_sprites(t_data *data);
-
-
+void				put_pixel_to_image(t_data *data, int x, int y, int color);
+int					create_color(int r, int g, int b);
+void				wall_heigth(t_ray *ray, t_data *data);
+void				rotate_right(t_player *player);
+void				rotate_left(t_player *player);
 
 //tmp
 void	ft_print(char **map);
