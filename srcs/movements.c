@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:45:18 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/07/01 17:01:39 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:50:55 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,51 @@
 
 void	ft_forward(t_player *player, t_data *data)
 {
-	if (data->map[(int)player->y][(int)(player->x + player->dir_x * player->move_speed)] != '1')
-		player->x += player->dir_x * player->move_speed;	
-	if (data->map[(int)(player->y + player->dir_y * player->move_speed)][(int)player->x] != '1')
+	if (data->map[(int)player->y][(int)(player->x + player->dir_x
+		* player->move_speed)] != '1')
+		player->x += player->dir_x * player->move_speed;
+	if (data->map[(int)(player->y + player->dir_y
+			* player->move_speed)][(int)player->x] != '1')
 		player->y += player->dir_y * player->move_speed;
 }
 
 void	ft_backward(t_player *player, t_data *data)
 {
-	if (data->map[(int)player->y][(int)(player->x - player->dir_x * player->move_speed)] != '1')
+	if (data->map[(int)player->y][(int)(player->x - player->dir_x
+		* player->move_speed)] != '1')
 		player->x -= player->dir_x * player->move_speed;
-	if (data->map[(int)(player->y - player->dir_y * player->move_speed)][(int)player->x] != '1')
+	if (data->map[(int)(player->y - player->dir_y
+			* player->move_speed)][(int)player->x] != '1')
 		player->y -= player->dir_y * player->move_speed;
 }
 
 void	ft_leftward(t_player *player, t_data *data)
 {
-	double	left_x = -player->dir_y;
-	double	left_y = player->dir_x;
+	double	left_x;
+	double	left_y;
 
-	if (data->map[(int)player->y][(int)(player->x + left_x * player->move_speed)] != '1')
+	left_x = -player->dir_y;
+	left_y = player->dir_x;
+	if (data->map[(int)player->y][(int)(player->x + left_x
+		* player->move_speed)] != '1')
 		player->x += left_x * player->move_speed;
-	if (data->map[(int)(player->y + left_y * player->move_speed)][(int)player->x] != '1')
+	if (data->map[(int)(player->y + left_y
+			* player->move_speed)][(int)player->x] != '1')
 		player->y += left_y * player->move_speed;
 }
 
 void	ft_rightward(t_player *player, t_data *data)
 {
-	double right_x = player->dir_y;
-	double right_y = -player->dir_x;
+	double	right_x;
+	double	right_y;
 
-	if (data->map[(int)player->y][(int)(player->x + right_x * player->move_speed)] != '1')
+	right_x = player->dir_y;
+	right_y = -player->dir_x;
+	if (data->map[(int)player->y][(int)(player->x + right_x
+		* player->move_speed)] != '1')
 		player->x += right_x * player->move_speed;
-	if (data->map[(int)(player->y + right_y * player->move_speed)][(int)player->x] != '1')
+	if (data->map[(int)(player->y + right_y
+			* player->move_speed)][(int)player->x] != '1')
 		player->y += right_y * player->move_speed;
 }
 
@@ -68,7 +80,3 @@ int	ft_keypress(int keycode, t_data *data)
 		rotate_right(data->player);
 	return (0);
 }
-
-
-
-

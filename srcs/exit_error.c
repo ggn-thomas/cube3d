@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:07:40 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/07/01 14:59:33 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:13:45 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	error(char *mess, t_data *data)
 
 void	destroy_sprites(t_data *data)
 {
-	mlx_destroy_image(data->mlx, data->NO);
-	mlx_destroy_image(data->mlx, data->SO);
-	mlx_destroy_image(data->mlx, data->EA);
-	mlx_destroy_image(data->mlx, data->WE);
+	mlx_destroy_image(data->mlx, data->no);
+	mlx_destroy_image(data->mlx, data->so);
+	mlx_destroy_image(data->mlx, data->ea);
+	mlx_destroy_image(data->mlx, data->we);
 }
 
 void	ft_free_map(char **map)
@@ -46,7 +46,7 @@ void	ft_free_map(char **map)
 void	ft_exit(t_data *data)
 {
 	if (!data)
-		return;
+		return ;
 	if (data->sprites_load == 1)
 		destroy_sprites(data);
 	if (data->img && data->mlx)
@@ -72,6 +72,3 @@ int	close_window(t_data *data)
 	ft_exit(data);
 	return (0);
 }
-
-
-

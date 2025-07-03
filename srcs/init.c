@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:57:11 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/07/01 16:59:09 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:14:02 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_ray	*ray_init(t_data *data)
 
 void	window_init(t_data	*data)
 {
+	data->img_data = NULL;
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		error("Error: Minilibx: Initializing failed!", data);
@@ -45,14 +46,15 @@ void	window_init(t_data	*data)
 	data->img = mlx_new_image(data->mlx, data->size_x, data->size_y);
 	if (!data->img)
 		error("Error: Minilibx: Image creation failed!", data);
-	data->img_data = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
+	data->img_data = mlx_get_data_addr(data->img, &data->bits_per_pixel,
+			&data->line_length, &data->endian);
 	data->ray = ray_init(data);
 }
 
 static void	player_init(t_data *data)
 {
 	data->player->x = 12.5;
-	data->player->y = 11.5; 
+	data->player->y = 11.5;
 	data->player->dir_x = -1.0;
 	data->player->dir_y = 0.0;
 	data->player->plane_x = 0.0;
@@ -62,13 +64,12 @@ static void	player_init(t_data *data)
 
 t_data	*data_init(char **map, t_data *data)
 {
-	data->player  = malloc(sizeof(t_player));
+	data->player = malloc(sizeof(t_player));
 	if (!data->player)
 		error("Error: Memory allocation failed!", data);
 	data->size_x = SIZE_X;
 	data->size_y = SIZE_Y;
 	player_init(data);
-	data->img_data = NULL;
 	data->bits_per_pixel = 0;
 	data->line_length = 0;
 	data->sprites_load = 0;
@@ -82,10 +83,10 @@ t_data	*data_init(char **map, t_data *data)
 	data->win = NULL;
 	data->mlx = NULL;
 	data->ray = NULL;
-	data->NO = NULL;
-	data->SO = NULL;
-	data->EA = NULL;
-	data->WE = NULL;
+	data->no = NULL;
+	data->so = NULL;
+	data->ea = NULL;
+	data->we = NULL;
 	window_init(data);
 	return (data);
 }
@@ -96,7 +97,6 @@ void	game_engine(char **map)
 
 	data = malloc(sizeof(t_data));
 	data_init(map, data);
-	//ft_print(data.map);
 	load_sprites(data);
 	mlx_hook(data->win, 2, 1L << 0, ft_keypress, data);
 	mlx_loop_hook(data->mlx, render, data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 10:46:57 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/07/01 16:59:30 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:55:24 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ static void	ray_direction(t_data *data, t_player *player, t_ray *ray, int x)
 {
 	double	camera_x;
 
-	//calcul de la direction du rayon
 	camera_x = 2 * x / (double)data->size_x - 1;
 	ray->dir_x = player->dir_x + player->plane_x * camera_x;
 	ray->dir_y = player->dir_y + player->plane_y * camera_x;
-	//calculer la distance que le rayon doit parcourir pour passer d'une ligne
-	// verticale à la suivante (x) ou d'une ligne horizontale à la suivante (y).
 	ray->delta_dist_x = (ray->dir_x == 0) ? 1e30 : fabs(1 / ray->dir_x);
 	ray->delta_dist_y = (ray->dir_y == 0) ? 1e30 : fabs(1 / ray->dir_y);
 }
@@ -58,13 +55,13 @@ static void	check_hit_wall(t_data *data, t_ray *ray, int *map_x, int *map_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
 			*map_x += ray->step_x;
-			ray->side = 0;// mur vertical (est / ouest)
+			ray->side = 0;
 		}
 		else
 		{
 			ray->side_dist_y += ray->delta_dist_y;
 			*map_y += ray->step_y;
-			ray->side = 1;//mur horizontal (sud / nord)
+			ray->side = 1;
 		}
 		if (data->map[*map_y][*map_x] == '1')
 			ray->hit = 1;

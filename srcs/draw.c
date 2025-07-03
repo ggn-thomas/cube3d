@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgaugai <thgaugai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:21:20 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/07/01 16:59:16 by thgaugai         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:12:39 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	draw_ceiling(t_data *data, int y, int x)
 {
 	int	ceiling_color;
 
-	ceiling_color = create_color(data->C[0], data->C[1], data->C[2]);
+	ceiling_color = create_color(data->c[0], data->c[1], data->c[2]);
 	while (y < data->draw_start)
 	{
 		put_pixel_to_image(data, x, y, ceiling_color);
@@ -26,9 +26,9 @@ void	draw_ceiling(t_data *data, int y, int x)
 
 void	draw_floor(t_data *data, int x, int y)
 {
-	int floor_color;
+	int	floor_color;
 
-	floor_color = create_color(data->F[0], data->F[1], data->F[2]);
+	floor_color = create_color(data->f[0], data->f[1], data->f[2]);
 	y = data->draw_end;
 	while (y < data->size_y)
 	{
@@ -45,7 +45,8 @@ void	draw_wall(t_data *data, void *texture, int x, int y)
 	y = data->draw_start;
 	while (y < data->draw_end)
 	{
-		data->tex_y = (int)((double)(y - data->draw_start) / (data->draw_end - data->draw_start) * IMG_WIDTH);
+		data->tex_y = (int)((double)(y - data->draw_start)
+				/ (data->draw_end - data->draw_start) * IMG_WIDTH);
 		color = get_texture_pixel(texture, data->tex_x, data->tex_y);
 		put_pixel_to_image(data, x, y, color);
 		y++;
@@ -55,7 +56,7 @@ void	draw_wall(t_data *data, void *texture, int x, int y)
 void	draw_vertical_line(t_player *player, t_data *data, t_ray *ray, int x)
 {
 	void	*texture;
-	int	y;
+	int		y;
 	double	wall_x;
 
 	y = 0;
