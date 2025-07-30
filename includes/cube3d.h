@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:47:20 by thgaugai          #+#    #+#             */
-/*   Updated: 2025/07/03 15:11:39 by thomas           ###   ########.fr       */
+/*   Updated: 2025/07/30 19:30:43 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ typedef struct s_data_map
 
 typedef struct s_player
 {
-	double 			x; // postion du joueur
+	double 			x;
 	double			y;
-	double 			dir_x; // vecteur direction
+	double 			dir_x;
 	double			dir_y;
-	double 			plane_x; // plan de projection
+	double 			plane_x;
 	double			plane_y;
 	double			move_speed;
 }					t_player;
@@ -85,8 +85,8 @@ typedef struct s_data
 	t_ray			*ray;
 	void			*mlx;
 	void			*win;
-	char			**map;
 	void			*img;
+	char			**map;
 	int				draw_start;
 	int				draw_end;
 	void			*no;
