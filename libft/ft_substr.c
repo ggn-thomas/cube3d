@@ -3,34 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lisux <lisux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/13 16:54:19 by thomas            #+#    #+#             */
-/*   Updated: 2024/10/17 16:19:32 by thomas           ###   ########.fr       */
+/*   Created: 2024/10/15 12:30:24 by lguiet            #+#    #+#             */
+/*   Updated: 2024/10/15 19:12:53 by lisux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*dest;
-	size_t	i;
+	char	*arr;
+	size_t	s_len;
+	size_t	max_len;
 
 	if (!s)
 		return (NULL);
-	if ((size_t)start > ft_strlen(s))
+	s_len = ft_strlen(s);
+	max_len = s_len - start;
+	if (start >= s_len)
 		return (ft_strdup(""));
-	if (len > ft_strlen(s + (size_t)start))
-		len = ft_strlen(s + (size_t)start);
-	dest = ft_calloc(len + 1, sizeof(char));
-	if (!dest)
+	if (s_len - start < len)
+		max_len = s_len - start;
+	else
+		max_len = len;
+	arr = malloc(sizeof(char) * max_len + 1);
+	if (!arr)
 		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dest[i] = s[start + i];
-		i++;
-	}
-	return (dest);
+	ft_strlcpy(arr, s + start, max_len + 1);
+	return (arr);
 }

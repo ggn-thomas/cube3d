@@ -3,60 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 16:33:59 by thomas            #+#    #+#             */
-/*   Updated: 2024/10/15 16:58:08 by thomas           ###   ########.fr       */
+/*   Created: 2024/10/17 12:33:31 by lguiet            #+#    #+#             */
+/*   Updated: 2024/10/21 14:50:59 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-static int	ft_intlen(long nb)
+static int	ft_size(int n)
 {
-	int	len;
+	int		stock_n;
+	size_t	size;
 
-	len = 0;
-	if (nb == 0)
-		len++;
-	if (nb < 0)
+	stock_n = n;
+	size = 0;
+	if (n <= 0)
+		size = 1;
+	while (stock_n != 0)
 	{
-		nb = -nb;
-		len++;
+		size++;
+		stock_n = stock_n / 10;
 	}
-	while (nb != 0)
+	return (size);
+}
+
+static char	*int_min(void)
+{
+	char	*int_min;
+
+	int_min = malloc(sizeof(char) * (12));
+	ft_strlcpy(int_min, "-2147483648", 13);
+	return (int_min);
+}
+
+static int	if_negative(int n, int *off_on)
+{
+	if (n >= 0)
 	{
-		nb = nb / 10;
-		len++;
+		*off_on = 0;
+		return (n);
 	}
-	return (len);
+	else
+	{
+		*off_on = 1;
+		return (n * -1);
+	}
+}
+
+static void	convert_digits(char *converted, int n, int size, int off_on)
+{
+	while (n > 0)
+	{
+		converted[size -1 + off_on] = (n % 10) + '0';
+		n = n / 10;
+		size--;
+	}
 }
 
 char	*ft_itoa(int n)
 {
-	long		nbr;
-	int			i;
-	int			len;
-	char		*dest;
+	size_t	size;
+	char	*converted;
+	int		off_on;
 
-	nbr = n;
-	len = ft_intlen(nbr);
-	i = 0;
-	dest = malloc(sizeof(char) * len + 1);
-	if (!dest)
+	if (n == -2147483648)
+		return (int_min());
+	if (n == 0)
+	{
+		converted = malloc(sizeof(char) * 2);
+		if (!converted)
+			return (NULL);
+		converted[0] = '0';
+		converted[1] = '\0';
+		return (converted);
+	}
+	n = if_negative(n, &off_on);
+	size = ft_size(n);
+	converted = malloc(sizeof(char) * (size + off_on + 1));
+	if (!converted)
 		return (NULL);
-	dest[0] = '0';
-	if (nbr < 0)
-	{
-		nbr *= -1;
-		dest[0] = '-';
-	}
-	i = len - 1;
-	while (nbr != 0)
-	{
-		dest[i--] = (nbr % 10) + '0';
-		nbr /= 10;
-	}
-	dest[len] = '\0';
-	return (dest);
+	if (off_on)
+		converted[0] = '-';
+	convert_digits(converted, n, size, off_on);
+	converted[size + off_on] = '\0';
+	return (converted);
 }

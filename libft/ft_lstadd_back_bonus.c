@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lguiet <lguiet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 13:59:35 by thomas            #+#    #+#             */
-/*   Updated: 2024/10/16 14:21:28 by thomas           ###   ########.fr       */
+/*   Created: 2024/10/22 15:58:10 by lguiet            #+#    #+#             */
+/*   Updated: 2024/10/24 12:26:24 by lguiet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*last ;
+	t_list	*temp;
 
 	if (!lst || !new)
 		return ;
-	last = ft_lstlast(*lst);
-	if (!last)
-		*lst = new ;
-	else
-		last->next = new ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
